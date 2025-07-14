@@ -550,7 +550,8 @@ export const CommercialProjects = () => {
               <a
                 href="https://www.brainlysolution.com/"
                 style={{ textDecoration: "none", color: "#232946" }}
-                target="parent"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Brainly Solution
               </a>{" "}
