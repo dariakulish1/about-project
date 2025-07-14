@@ -1,0 +1,58 @@
+.home-page {
+    width: 80vw;
+    height: 550px;
+    margin: auto;
+    margin-top: 100px;
+    &__welcome-text {
+        color: #0081a7;
+        font-family: "Marcellus", serif;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 30px;
+    }
+    &__flex-box-skills {
+        width: 500px;
+        height: 300px;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    @media (max-width: 700px) {
+        &__flex-box-skills {
+            display: grid;
+        }
+    }
+    &__box-skill {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: inherit;
+        }
+        &:visited {
+            text-decoration: none;
+            color: inherit;
+        }
+        p {
+            color: white;
+            margin-top: 10px;
+            font-family: "Marcellus", serif;
+            font-weight: 600;
+            font-size: 18px;
+        }
+    }
+}
