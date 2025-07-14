@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dariakulish1.github.io/about-project/",
   "dependencies": {
     "@date-io/date-fns": "1.x",
     "@emotion/react": "^11.14.0",
@@ -16,6 +17,7 @@
     "add": "^2.0.6",
     "date-fns": "2.30.0",
     "framer-motion": "^12.23.0",
+    "gh-pages": "^6.3.0",
     "lottie-react": "^2.4.1",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
@@ -36,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
