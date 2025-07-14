@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const item = {
   hidden: { y: 20, opacity: 0 },
@@ -52,6 +53,8 @@ const leftAnimation = {
 export const HomePage = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const ref = useRef(null);
   const inView = useInView(ref, { threshold: 0.2 });
@@ -85,7 +88,7 @@ export const HomePage = () => {
             <NavLink
               to="/about-me"
               className="home-page__box-skill"
-              style={{ background: "#ef601e", height: "322px" }}
+              style={{ background: "#ef601e", height: isSmallScreen ? "200px" : "322px" }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
@@ -137,36 +140,12 @@ export const HomePage = () => {
             ref={ref}
             initial="hidden"
             animate={hasAnimated ? "visible" : "hidden"}
-            variants={leftAnimation}
-            transition={{ duration: 0.7, delay: 0.9 }}
-          >
-            <NavLink
-              to="/my-skills"
-              className="home-page__box-skill"
-              style={{ background: "#caaacd" }}
-            >
-              <AutoAwesomeMosaicIcon
-                style={{
-                  fontSize: "50px",
-                  color: "#e8cace",
-                  marginTop: "15px",
-                }}
-              />
-              <p style={{ color: "#fdf3dd" }}>My skills</p>
-            </NavLink>
-          </motion.div>
-        </div>
-        <div>
-          <motion.div
-            ref={ref}
-            initial="hidden"
-            animate={hasAnimated ? "visible" : "hidden"}
             variants={rightAnimation}
             transition={{ duration: 0.7, delay: 0.6 }}
           >
             <NavLink
               to="/commercial-projects"
-              className="home-page__box-skill"
+              className="home-page__box-skill box-child"
               style={{ background: "#cb962e" }}
             >
               <WorkIcon
@@ -179,6 +158,8 @@ export const HomePage = () => {
               <p style={{ color: "#fdf3dd" }}>Commercial projects</p>
             </NavLink>
           </motion.div>
+        </div>
+        <div>
           <motion.div
             ref={ref}
             initial="hidden"
@@ -189,7 +170,7 @@ export const HomePage = () => {
             <NavLink
               to="/contact-me"
               className="home-page__box-skill"
-              style={{ background: "#f1dfb6" }}
+              style={{ background: "#f1dfb6", marginLeft: "-210px" }}
             >
               <ContactMailIcon
                 style={{
@@ -198,7 +179,7 @@ export const HomePage = () => {
                   marginTop: "15px",
                 }}
               />
-              <p style={{ color: "#ef601e" }}>Contsct me</p>
+              <p style={{ color: "#ef601e" }}>Contact me</p>
             </NavLink>
           </motion.div>
         </div>

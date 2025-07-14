@@ -13,7 +13,7 @@ import projectScreenOFive from "../img/project-screen5.png";
 import projectScreenOSix from "../img/project-screen6.png";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import "./CommercialProjects.scss";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DoneIcon from "@mui/icons-material/Done";
 import { TypeAnimation } from "react-type-animation";
@@ -34,6 +34,8 @@ import {
 import Skeleton from "@mui/material/Skeleton";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+// import { useQuery, useQueryClient } from "react-query";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const rightAnimation = {
   hidden: { opacity: 0, x: 50 },
@@ -210,6 +212,8 @@ function PopupFirstContent({ close }) {
 const PopupSecondContent = ({ close }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [selectionRange, setSelectionRange] = useState({
     startDate: (() => {
       const d = new Date();
@@ -220,7 +224,10 @@ const PopupSecondContent = ({ close }) => {
     key: "selection",
   });
 
-  const countryCodes = ["US", "GB", "DE", "FR", "IT", "UA", "IN", "BG"];
+  const countryCodes = useMemo(
+    () => ["US", "GB", "DE", "FR", "IT", "UA", "IN", "BG", "SE", "CH"],
+    []
+  );
 
   function getDatesInRange(startDate, endDate) {
     const dates = [];
@@ -259,7 +266,7 @@ const PopupSecondContent = ({ close }) => {
         console.error("Error: ", error);
         setLoading(false);
       });
-  }, []);
+  }, [countryCodes]);
 
   const datesInRange = getDatesInRange(
     selectionRange.startDate,
@@ -357,7 +364,7 @@ const PopupSecondContent = ({ close }) => {
           <p className="commercial-projects__more-info-two-text">
             <TypeAnimation
               sequence={[
-                "Unfortunately, I cannot share the actual work due to confidentiality. However, I can demonstrate a similar version using fictional data upon request.",
+                "Unfortunately, I’m unable to share the original project due to confidentiality. However, I recreated a small demo using public API data. In the demo, I visualize the number of public holidays per day on a chart to demonstrate similar functionality.",
                 500,
                 () => {
                   console.log("Sequence completed");
@@ -366,25 +373,43 @@ const PopupSecondContent = ({ close }) => {
               wrapper="span"
               cursor={false}
               repeat={0}
-              style={{ fontSize: "16px", display: "inline-block" }}
+              style={{
+                fontSize: "16px",
+                display: "inline-block",
+                textAlign: "center",
+              }}
             />
           </p>
           <div>
-            <DateRangePicker
-              ranges={[selectionRange]}
-              onChange={handleSelect}
-              locale={enUS}
-              showMonthAndYearPickers={true}
-              showDateDisplay={false}
-              moveRangeOnFirstSelection={false}
-              rangeColors={["#232946"]}
-              showSelectionPreview={false}
-              editableDateInputs={false}
-            />
+            {isSmallScreen ? (
+              <DateRange
+                ranges={[selectionRange]}
+                onChange={handleSelect}
+                locale={enUS}
+                showMonthAndYearPickers={true}
+                showDateDisplay={false}
+                moveRangeOnFirstSelection={false}
+                rangeColors={["#232946"]}
+                showSelectionPreview={false}
+                editableDateInputs={false}
+              />
+            ) : (
+              <DateRangePicker
+                ranges={[selectionRange]}
+                onChange={handleSelect}
+                locale={enUS}
+                showMonthAndYearPickers={true}
+                showDateDisplay={false}
+                moveRangeOnFirstSelection={false}
+                rangeColors={["#232946"]}
+                showSelectionPreview={false}
+                editableDateInputs={false}
+              />
+            )}
           </div>
           <div
             style={{
-              width: "70%",
+              width: isSmallScreen ? "90%" : "70%",
               height: 250,
               marginBottom: 24,
               flexShrink: 0,
@@ -521,11 +546,19 @@ export const CommercialProjects = () => {
               Brainly Solution
             </h3>
             <p className="commercial-projects__about-project-one">
-              I developed a landing page for Brainly Solution as part of a
-              commercial project. The work included building a responsive layout
-              based on a Figma design, implementing form submission using
-              Firebase, and ensuring cross-device compatibility. The project
-              focused on clean UI, usability, and performance.
+              I developed a landing page for{" "}
+              <a
+                href="https://www.brainlysolution.com/"
+                style={{ textDecoration: "none", color: "#232946" }}
+                target="parent"
+              >
+                Brainly Solution
+              </a>{" "}
+              as part of a commercial project. The work included building a
+              responsive layout based on a Figma design, implementing form
+              submission using Firebase, and ensuring cross-device
+              compatibility. The project focused on clean UI, usability, and
+              performance.
             </p>
             <div className="commercial-projects__project-tech">
               <span>React</span>
